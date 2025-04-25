@@ -1,0 +1,42 @@
+#variable "vpc_cidr" {
+#  description = "Main VPC CIDR block"
+#  type        = string
+#}
+variable "vpc_id" {
+  description = "The ID of the existing VPC"
+  type        = string
+}
+
+
+
+variable "public_cidr" {
+  description = "Public subnet CIDR blocks (comma-separated)"
+  type        = list(string)
+  validation {
+    condition = alltrue([
+      for cidr in var.public_cidr : can(cidrnetmask(cidr)) && cidrhost(cidr, 0) == split("/", cidr)[0]
+    ])
+    error_message = "All values must be valid CIDR blocks"
+  }
+}
+
+variable "private_cidr" {
+  description = "Private subnet CIDR blocks (comma-separated)"
+  type        = list(string)
+  validation {
+    condition = alltrue([
+      for cidr in var.private_cidr : can(cidrnetmask(cidr)) && cidrhost(cidr, 0) == split("/", cidr)[0]
+    ])
+    error_message = "All values must be valid CIDR blocks"
+  }
+}
+
+variable "az" {
+  description = "Availability zones (comma-separated)"
+  type        = list(string)
+  validation {
+    condition = length(var.az) >= 2
+    error_message = "Minimum 2 AZs required for high availability"
+  }
+}
+
