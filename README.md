@@ -1,5 +1,5 @@
  Terraform AWS Web Infrastructure – WordPress Hosting
-This project uses **Terraform** to provision a **modular AWS infrastructure** to host a **WordPress website** using:
+This project uses **Terraform** to provision a **modular AWS infrastructure** to host a **WordPress website** using
 - **EC2** (for WordPress)
 - **RDS MySQL** (managed DB)
 - **VPC with public/private subnets**
